@@ -1,0 +1,38 @@
+
+<div class="p-4 pl-16">
+  <h2 class="text-lg font-semibold text-white mb-2">Options de tri :</h2>
+  <div class="flex items-center space-x-4">
+    <div>
+      <label for="sortColumn" class="block text-sm font-medium text-white">Colonne de tri :</label>
+      <select id="sortColumn" name="sortColumn" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        <!-- Options pour la colonne de tri -->
+        <option value="originalTitle">Titre original</option>
+        <option value="startYear">Année de début</option>
+        <!-- Ajoute d'autres options au besoin -->
+      </select>
+    </div>
+    <div>
+      <label for="sortType" class="block text-sm font-medium text-white">Type de tri :</label>
+      <select id="sortType" name="sortType" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+        <!-- Options pour le type de tri -->
+        <option value="asc">Croissant</option>
+        <option value="desc">Décroissant</option>
+      </select>
+    </div>
+    <button class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Appliquer</button>
+  </div>
+</div>
+
+<div class="p-16">
+  @for (movie of movies; track $index) {
+<app-card
+      [type]="movie.titleType"
+      [title]="movie.primaryTitle"
+      [originalTitle]="movie.originalTitle"
+      [duration]="movie.runtimeMinutes"
+      [isAdult]="movie.isAdult"
+      [genres]="movie.genres"
+      [release]="movie.startYear"
+    ></app-card>
+  }
+</div>
