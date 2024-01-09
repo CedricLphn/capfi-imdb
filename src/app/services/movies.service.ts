@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Inject, Injectable, Signal, signal, WritableSignal} from '@angular/core';
 import {MOVIE_DATABASE, MovieDatabase} from "../core/movie-database.interface";
 import {Observable, ReplaySubject} from "rxjs";
 import {Movie} from "../models/movie.model";
@@ -8,13 +8,21 @@ import {Movie} from "../models/movie.model";
 })
 export class MoviesService {
 
-  private movies$ : ReplaySubject<Movie[]> = new ReplaySubject<Movie[]>(0);
+  private movies$ : WritableSignal<Movie[]>= signal<Movie[]>([]);
   constructor(@Inject(MOVIE_DATABASE) private movieDatabase : MovieDatabase) {
     this.movieDatabase.getMovies()
-      .subscribe(movies => this.movies$.next(movies));
+      .subscribe(movies => {
+        this.movies$.set(movies)
+      });
+
   }
 
-  get movies() : Observable<Movie[]> {
-    return this.movies$.asObservable();
+  add(movie : Movie) : void {
+    this.movies$.set([movie, ...this.movies()]);
   }
+
+  get movies() : Signal<Movie[]> {
+    return this.movies$.asReadonly();
+  }
+
 }

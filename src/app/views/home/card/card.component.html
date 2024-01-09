@@ -1,12 +1,12 @@
-<a href="#" class="mb-5 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+<a href="#" class="mb-5 flex flex-col items-center border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 border-gray-700 bg-gray-800 hover:bg-gray-700">
   <div class="w-1/4 font-medium text-center text-3xl text-white  rounded-t-lg h-full md:rounded-none md:rounded-s-lg">
     {{ title | twoFirstLetters | uppercase }}
   </div>
   <div class="flex flex-col justify-between p-4 leading-normal">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{title}} ({{type}})</h5>
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{title}} ({{type}})</h5>
     <div class="mb-2">
       @for (genre of genres; track $index) {
-        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300">{{genre}}</span>
+        <span class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-full bg-blue-900 text-blue-300">{{genre}}</span>
       }
       <span *ngIf="isAdult" class="text-xs font-medium me-2 px-2.5 py-0.5 rounded-full bg-red-900 text-red-300">Adult</span>
     </div>
