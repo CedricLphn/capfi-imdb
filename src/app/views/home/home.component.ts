@@ -1,11 +1,13 @@
 import {Component, effect, OnDestroy, OnInit, Signal, signal} from '@angular/core';
 import {CardComponent} from "./card/card.component";
-import { MoviesService } from '../../services/movies.service';
+import {MoviesService, SortInput} from '../../services/movies.service';
 import {Movie} from "../../models/movie.model";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {CreateMovieComponent} from "../create-movie/create-movie.component";
 import {NgIf} from "@angular/common";
+import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {SortColumn, SortType} from "../../core/movie-database.interface";
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,9 @@ import {NgIf} from "@angular/common";
   imports: [
     CardComponent,
     CreateMovieComponent,
-    NgIf
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -24,6 +28,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   loading = signal(true);
   createMovie = false;
+
+  sortInput = new FormGroup({
+    column : new FormControl(SortColumn.ORIGINAL_TITLE),
+    type: new FormControl(SortType.ASC.toString())
+  });
 
   constructor(private moviesService: MoviesService,
               private route: ActivatedRoute) {
@@ -41,11 +50,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
-
-
-
   }
 
 
+  sortMovies() {
+    console.log(this.sortInput.value)
+    this.moviesService.sort(<SortInput>this.sortInput.value)
+  }
 
+
+  protected readonly SortType = SortType;
 }
